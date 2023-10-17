@@ -1,35 +1,22 @@
-# Homework Week 1 Status Report
+# [Homeworks Week 1](#homeworks-week-1)
 
 ## Tasks
 
-- :heavy_check_mark: **Read Popper’s Text**
+- **Read Popper’s text:** <span style="color:red">done</span>
   
-- :heavy_check_mark: **Indicate your name on the Pad**
+- **Indicate your name on the Pad:** <span style="color:red">done</span>
   
-- :heavy_check_mark: **Register on Mattermost**
-  - Mattermost ID: `<Your Mattermost ID>`
-
-- :heavy_check_mark: **Set up Public GitHub/GitLab Project**
-  - GitHub/GitLab Repository URL: `<Your GitHub/GitLab Repository URL>`
-
-- :heavy_check_mark: **Register for the MOOC on Reproducible Research**
-
-- :hourglass_flowing_sand: **Follow Modules 1 + 2 of the MOOC**
-  - Status: In Progress
-
-- :heavy_check_mark: **Set up Computational Document System**
-  - Used RStudio/Jupyter on UGA JupyterHub
-
-## Submission Details
-
-- **GitHub/GitLab Repository:** `<Your GitHub/GitLab Repository URL>`
+- **Register on the Mattermost through this invitation link:** <span style="color:red">done</span>
   
-- **Mattermost ID on Pad:** `<Your Mattermost ID>`
-
-## Additional Notes
-
-- For MOOC modules, ensure you complete as many exercises as possible, excluding the last one of module 2, on Challenger (watching interviews is optional).
-- If you encounter any issues or need assistance, feel free to ask for help on Mattermost.
+- **Set up a public GitHub or GitLab project for this lecture:** <span style="color:red">done</span>
+  
+- **Register to the MOOC on Reproducible Research:** <span style="color:red">done</span>
+  
+- **Follow modules 1 + 2 of the MOOC with as much exercises as possible (except the last one of module 2, on Challenger; watching interviews is optional):** <span style="color:red">in progress</span>
+  
+- **Set up a computational document system (e.g., Rstudio or Jupyter on your laptop or through the UGA JupyterHub):** <span style="color:red">done</span>
+  
+- **Report the URL of your git project, your Mattermost ID on the Pad:** <span style="color:red">done</span>
 
 ---
 
