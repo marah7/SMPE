@@ -1,10 +1,35 @@
-Homeworks the first week:
+# Homework Week 1 Status Report
 
-[done ] Read Popper’s text
-[done ] Indicate your name on the Pad. You will use to collaborate and fill in all the information you can.
-[done ] Register on the Mattermost through this invitation link. This is the preferred communication mode.
-[done ] Set up a public github or gitlab project for this lecture. You will take notes on this lecture and turn your homework and computational documents in this project.
-[done ] Register to the MOOC on Reproducible Research
-[in progress ] Follow modules 1 + 2 of the MOOC with as much exercises as possible (except the last one of module2, on Challenger; watching interviews is optional)
-[done ] Set up a computational document system (e.g., Rstudio or Jupyter on your laptop or through the UGA JupyterHub).
-[done ] Report the URL of your git project, your mattermost ID on the Pad.
+## Tasks
+
+- :heavy_check_mark: **Read Popper’s Text**
+  
+- :heavy_check_mark: **Indicate your name on the Pad**
+  
+- :heavy_check_mark: **Register on Mattermost**
+  - Mattermost ID: `<Your Mattermost ID>`
+
+- :heavy_check_mark: **Set up Public GitHub/GitLab Project**
+  - GitHub/GitLab Repository URL: `<Your GitHub/GitLab Repository URL>`
+
+- :heavy_check_mark: **Register for the MOOC on Reproducible Research**
+
+- :hourglass_flowing_sand: **Follow Modules 1 + 2 of the MOOC**
+  - Status: In Progress
+
+- :heavy_check_mark: **Set up Computational Document System**
+  - Used RStudio/Jupyter on UGA JupyterHub
+
+## Submission Details
+
+- **GitHub/GitLab Repository:** `<Your GitHub/GitLab Repository URL>`
+  
+- **Mattermost ID on Pad:** `<Your Mattermost ID>`
+
+## Additional Notes
+
+- For MOOC modules, ensure you complete as many exercises as possible, excluding the last one of module 2, on Challenger (watching interviews is optional).
+- If you encounter any issues or need assistance, feel free to ask for help on Mattermost.
+
+---
+
