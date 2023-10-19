@@ -1,0 +1,51 @@
+### Good graphics checklist
+
+## Bananas
+
+I find it challenging to get a clear understanding of each year from this graph.
+
+![Bananas](bananas.png)
+
+#### Data
+- [ ] Type of graphic adapted
+- [ ] Interpolation make sense
+- [x] Sufficient number of points
+- [ ] Building method clear
+- [ ] Confidence intervals visualized
+- [ ] Appropriate steps for histograms
+- [ ] Histograms visualize probabilities
+
+#### Graphical objects
+- [ ] Graphical objects are readable on any support
+- [ ] Standard color range
+- [ ] Axis identified and labelled
+- [ ] Scales units are explicit
+- [ ] No ambiguity when curves cross
+- [ ] Grid helps reading
+
+#### Annotation
+- [ ] Axis are labelled by quantities
+- [ ] Labels of the axis are clear, and self contained
+- [ ] Units are indicated on the axis
+- [ ] Axes are oriented from bottom-left to top-right
+- [ ] Origin should be (0,0), if not it should be clearly justified
+- [ ] No Hole on the axes
+- [ ] the order's of graph/histogram bar is based on classical ordering 
+- [ ] Curves and Bar has legend
+
+#### Information
+- [x] Curves on the same scale
+- [ ] Less than 6 curves
+- [x] Compare curves on same graphics
+- [ ] A curve cannot be removed without reducing infos
+- [x] The graphic gives relevant infos
+- [ ] If showing average, don't forget the error bars
+- [ ] It is not possible to remove object without altering readability
+
+#### Context
+- [x] All symbols used are defined and references
+- [ ] The graphics is the most appropriate representation for the data
+- [x] The graphic has a title
+- [ ] The title is meaningful and self contained
+- [ ] The graphic is referenced in text
+- [ ] The text comment the figure
