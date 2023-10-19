@@ -1,6 +1,13 @@
-### Good graphics checklist
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Good graphics checklist
 
-## Bananas
+## First graphic
+
+### Bananas
 
 I find it challenging to get a clear understanding of each year from this graph.
 
@@ -19,7 +26,7 @@ I find it challenging to get a clear understanding of each year from this graph.
 - [ ] Graphical objects are readable on any support
 - [ ] Standard color range
 - [ ] Axis identified and labelled
-- [ ] Scales units are explicit
+- [x] Scales units are explicit
 - [ ] No ambiguity when curves cross
 - [ ] Grid helps reading
 
@@ -29,13 +36,13 @@ I find it challenging to get a clear understanding of each year from this graph.
 - [ ] Units are indicated on the axis
 - [ ] Axes are oriented from bottom-left to top-right
 - [ ] Origin should be (0,0), if not it should be clearly justified
-- [ ] No Hole on the axes
-- [ ] the order's of graph/histogram bar is based on classical ordering 
-- [ ] Curves and Bar has legend
+- [x] No Hole on the axes
+- [x] the order's of graph/histogram bar is based on classical ordering 
+- [x] Curves and Bar has legend
 
 #### Information
 - [x] Curves on the same scale
-- [ ] Less than 6 curves
+- [x] Less than 6 curves
 - [x] Compare curves on same graphics
 - [ ] A curve cannot be removed without reducing infos
 - [x] The graphic gives relevant infos
@@ -46,6 +53,55 @@ I find it challenging to get a clear understanding of each year from this graph.
 - [x] All symbols used are defined and references
 - [ ] The graphics is the most appropriate representation for the data
 - [x] The graphic has a title
-- [ ] The title is meaningful and self contained
+- [x] The title is meaningful and self contained
 - [ ] The graphic is referenced in text
+- [ ] The text comment the figure
+
+## Second graphic
+
+### Death
+
+![Death](gun-death.png)
+#### Data
+- [x] Type of graphic adapted
+- [ ] Interpolation make sense
+- [x] Sufficient number of points
+- [x] Building method clear
+- [ ] Confidence intervals visualized
+- [ ] Appropriate steps for histograms
+- [ ] Histograms visualize probabilities
+
+#### Graphical objects
+- [x] Graphical objects are readable on any support
+- [ ] Standard color range
+- [ ] Axis identified and labelled
+- [x] Scales units are explicit
+- [ ] No ambiguity when curves cross
+- [ ] Grid helps reading
+
+#### Annotation
+- [ ] Axis are labelled by quantities
+- [ ] Labels of the axis are clear, and self contained
+- [ ] Units are indicated on the axis
+- [ ] Axes are oriented from bottom-left to top-right
+- [x] Origin should be (0,0), if not it should be clearly justified
+- [x] No Hole on the axes
+- [x] the order's of graph/histogram bar is based on classical ordering 
+- [ ] Curves and Bar has legend
+
+#### Information
+- [x] Curves on the same scale
+- [x] Less than 6 curves
+- [ ] Compare curves on same graphics
+- [ ] A curve cannot be removed without reducing infos
+- [x] The graphic gives relevant infos
+- [ ] If showing average, don't forget the error bars
+- [x] It is not possible to remove object without altering readability
+
+#### Context
+- [x] All symbols used are defined and references
+- [ ] The graphics is the most appropriate representation for the data
+- [x] The graphic has a title
+- [x] The title is meaningful and self contained
+- [x] The graphic is referenced in text
 - [ ] The text comment the figure
