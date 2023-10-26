@@ -40,5 +40,4 @@ rmv <- predict(logistic_reg,list(Temperature=tempv),type="response")
 plot(tempv,rmv,type="l",ylim=c(0,1))
 points(data=data, Malfunction/Count ~ Temperature)
 ```
-
-
+# I  should determine the audience for my  computational document
