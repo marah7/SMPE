@@ -1,0 +1,44 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# A good start is with the data display.
+```{r}
+data = read.csv("module2_exo5_shuttle.csv",header=T)
+data
+```
+
+# The data is too small, which will affect the results.
+# I think we shouldnt remove the 0 malfuntion
+
+```{r}
+logistic_reg = glm(data=data, Malfunction/Count ~ Temperature, weights=Count,family=binomial(link='logit'))
+summary(logistic_reg)
+```
+# I don't like how there is output without a good explanation.
+
+```{r}
+plot(data=data, Malfunction/Count ~ Temperature, ylim=c(0,1))
+```
+# Also, I think the graph from above was enough to understand that there is not a significant impact between temperature and the malfunction.
+
+# Here also  not a very good explanation a little complex.
+Suppose that each of the six O-rings is damaged with the same
+probability and independently of the others and that this probability
+depends only on the temperature. If $p(t)$ is this probability, the
+number $D$ of malfunctioning O-rings during a flight at
+temperature $t$ follows a binomial law with parameters $n=6$ and
+$p=p(t)$. To link $p(t)$ to $t$, we will therefore perform a
+logistic regression.
+
+# Why we are doing this if there is no impact between temp and malfunction?
+```{r}
+# shuttle=shuttle[shuttle$r!=0,] 
+tempv = seq(from=30, to=90, by = .5)
+rmv <- predict(logistic_reg,list(Temperature=tempv),type="response")
+plot(tempv,rmv,type="l",ylim=c(0,1))
+points(data=data, Malfunction/Count ~ Temperature)
+```
+
+
