@@ -19,6 +19,18 @@
 ## Tasks
 
 
-- [⚠️] **Start learning R by reading [this R crash course for computer scientists](https://htmlpreview.github.io/?https://github.com/alegrand/SMPE/blob/master/sessions/2022_10_Grenoble/R_crash_course.html) and [Rmd sources](https://github.com/alegrand/SMPE/blob/master/sessions/2022_10_Grenoble/R_crash_course.Rmd):**
+- [✅] **Start learning R by reading [this R crash course for computer scientists](https://htmlpreview.github.io/?https://github.com/alegrand/SMPE/blob/master/sessions/2022_10_Grenoble/R_crash_course.html) and [Rmd sources](https://github.com/alegrand/SMPE/blob/master/sessions/2022_10_Grenoble/R_crash_course.Rmd):**
+- [✅] Criticize every figure of Jean-Marc’s slides by: Applying the checklist for good graphics; Proposing a better representation (hand-drawing is fine) that passes the checklist.
+- [✅] Report this work for at least 3 figures on you github/gitlab project.
+- [✅] MOOC: Complete exercise 5 of module 2 (Challenger). Write a short text explaining what is good and wrong about this document (you may want to provide an updated version of the notebook) and upload on your github/gitlab space.
+
+### Homeworks Week 3
+
+## Tasks
+- [⚠️] Use good naming and organization conventions in your repos.
+- [✅] Complete the Challenger exercise if you haven’t done so.
+- [⚠️] Engage in module 3 of the MOOC and choose a topic for the peer evaluation (final task of module 3).
+- [⚠️] Here is an opportunity to practice your data curation/analysisskills by producing the First name/last name analysis in a computational document. I encourage you to use dplyr and ggplot for this analysis.
+
 
 
