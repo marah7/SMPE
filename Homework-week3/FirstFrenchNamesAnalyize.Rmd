@@ -91,7 +91,7 @@ ggplot(grouped_data, aes(x = annais, y = total_occurrences, fill = preusuel)) +
        y = "Total Occurrences",
        fill = "First Name") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 10, angle = 90, hjust = 1))  # Adjust the size parameter and angle 
+  theme(axis.text.x = element_text(size = 10, angle = 60, hjust = 1))  # Adjust the size parameter and angle 
 
 
 
@@ -100,4 +100,43 @@ ggplot(grouped_data, aes(x = annais, y = total_occurrences, fill = preusuel)) +
 
 
 2. Establish by gender the most given firstname by year. Analyse the evolution of the most frequent firstname.
+```{r}
+
+# Remove rows with NA values in the 'annais' column
+FirstNames <- FirstNames[complete.cases(FirstNames$annais), ]
+
+# Find the most frequent name for each gender in each year
+most_frequent_names <- FirstNames %>%
+  group_by(sexe, annais, preusuel) %>%
+  summarise(total_occurrences = sum(nombre), .groups = "drop") %>%
+  group_by(sexe, annais) %>%
+  arrange(desc(total_occurrences)) %>%
+  slice(1) %>%
+  ungroup()
+# Convert 'annais' to numeric
+most_frequent_names$annais <- as.numeric(as.character(most_frequent_names$annais))
+most_frequent_names <- most_frequent_names %>%
+  filter(annais %% 5 == 0)
+
+# Determine the color for each year based on gender
+most_frequent_names <- most_frequent_names %>%
+  mutate(color = ifelse(sexe == 1, "black", "red"))
+
+# Create a bar chart with facets for each gender
+p<-ggplot(most_frequent_names, aes(x = as.factor(annais), y = total_occurrences, fill = color, label = preusuel)) +
+  geom_bar(stat = "identity") +
+  geom_text(position = position_stack(vjust = 0.1), size = 3, color = "white", angle = 90, hjust = 0) +  # Add labels vertically with white text
+  labs(title = "Most Frequent First Name Over Time (Every 5 Years)",
+       x = "Year",
+       y = "Count") +
+  scale_fill_identity() +  
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 8, angle = 60, hjust = 1),
+        axis.text.y = element_text(size = 6)) +  # Adjust text size for y-axis  
+  facet_grid(sexe ~ ., scales = "free_y" ,labeller = labeller(sexe = c("1" = "Men", "2" = "Women"))) +
+  theme(legend.position = "none")  # Remove default legend
+
+print(p)
+```
+
 3. Optional : Which department has a larger variety of names along time ? Is there some sort of geographical correlation with the data?
