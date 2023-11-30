@@ -1,0 +1,140 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# About the Analysis:
+In 1972-1974, in Whickham, a town in the north-east of England, located approximately 6.5 kilometers south-west of Newcastle upon Tyne, a survey of one-sixth of the electorate was conducted in order to inform work on thyroid and heart disease (Tunbridge et al. 1977). A continuation of this study was carried out twenty years later. (Vanderpump et al. 1995). Some of the results were related to smoking and whether individuals were still alive at the time of the second study. For the purpose of simplicity, we will restrict the data to women and among those to the 1314 who were categorized as "smoking currently" or "never smoked". There were relatively few women in the initial survey who smoked but have since quit (162) and very few for whom information was not available (18). Survival at 20 years was determined for all women of the first survey.
+
+All these data are available in Subject6_smoking csv file . You will find on each line if the person smokes or not, whether alive or dead at the time of the second study, and his age at the time of the first survey.
+
+
+# Question 1:
+Tabulate the total number of women alive and dead over the period according to their smoking habits. Calculate in each group (smoking/non-smoking) the mortality rate (the ratio of the number of women who died in a group to the total number of women in that group). You can graph these data and calculate confidence intervals if you wish. Why is this result surprising?
+
+## Answer 1:
+
+### Let's read the data and examine the mortality rates in each group, without considering age. This overview will provide us with a broad understanding of the mortality patterns across different groups.
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+#The dataset used in my analysis comprises three columns: Age, Status, and Smoker,
+
+data <- read.csv("./data_smoker_women/Subject6_smoking.csv")
+
+summary(data$Age)
+summary(data$Status)
+summary(data$Smoker)
+
+# Create a contingency table
+contingency_table <- data %>%
+  group_by(Smoker, Status) %>%
+  summarize(Count = n(), .groups = "drop") %>%
+  pivot_wider(names_from = Status, values_from = Count)
+
+# Calculate mortality rate
+contingency_table <- contingency_table %>%
+  mutate(Mortality_Rate = Dead / (Dead + Alive))
+
+# Print contingency table and mortality rates
+print(contingency_table)
+
+# Create a bar plot
+ggplot(data = contingency_table, aes(x = Smoker, y = Mortality_Rate, fill = Smoker)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Mortality Rate by Smoking Status (Women Only)",
+       x = "Smoker",
+       y = "Mortality Rate") +
+  theme_minimal()
+
+
+
+
+
+
+```
+
+### The table and the bar chart show the counts of women categorized by smoking habits ('No' or 'Yes'), along with the number of women alive, dead, and the calculated mortality rate in each group. The mortality rate is the ratio of the number of women who died to the total number of women in each group.
+
+### Although I observe a higher mortality rate in the non-smoker group compared to the smoker group, it's essential to consider the potential influence of age on these results. I will investigate the distribution of women in each age group for both smokers and non-smokers. This will help us assess if there is any bias in the data due to variations in age, ensuring a more comprehensive understanding of the observed mortality rates.
+
+### Perhaps, some of these women might have started smoking recently, and this factor could influence the results. Additionally, there are a few women for whom we lack information.
+
+# Question 2:
+Go back to question 1 (numbers and mortality rates) and add a new category related to the age group. For example, the following classes will be considered: 18-34 years, 34-54 years, 55-64 years, over 65 years.
+
+Why is this result surprising? Can you explain this paradox? Similarly, you may wish to provide a graphical representation of the data to support your explanations.
+
+## Answer 2:
+### Begin by eliminating the missing values and categorizing individuals into age groups.
+```{r}
+# Remove rows with missing values in the 'Age' variable
+data <- na.omit(data)
+
+# Create age groups
+data$Age_Group <- cut(data$Age, breaks = c(18, 34, 54, 64, 90), 
+                      labels = c("18-34", "35-54", "55-64", "65-90"))
+
+# Count the number of women in each age group based on smoking status
+count_by_age_group <- data %>%
+  group_by(Smoker, Age_Group) %>%
+  summarize(Count = n(), .groups = "drop")
+
+print(count_by_age_group)
+```
+### The table provides the count of women in each age group, allowing us to observe the distribution across different age categories.
+```{r}
+# Remove rows with missing values in the 'Age' variable
+data <- na.omit(data)
+
+# Create age groups
+data$Age_Group <- cut(data$Age, breaks = c(18, 34, 54, 64, 90), 
+                      labels = c("18-34", "35-54", "55-64", "65-90"))
+
+# Count the number of women in each age group based on smoking status
+count_by_age_group <- data %>%
+  group_by(Smoker, Age_Group) %>%
+  summarize(
+    Count = n(),
+    Dead = sum(Status == "Dead"),
+    .groups = "drop"
+  )
+
+# Calculate the mortality rate in each age group
+mortality_by_age_group <- data %>%
+  group_by(Smoker, Age_Group) %>%
+  summarize(
+    Count = n(),
+    Dead = sum(Status == "Dead"),
+    Mortality_Rate = Dead / n(),
+    .groups = "drop"
+  ) %>%
+  ungroup()
+
+print(mortality_by_age_group)
+```
+### Now, examining the Mortality Rate in each group, I observe higher rates in certain age ranges, such as 55-64, within the smokers' group. However, it's essential to note that the number of measurements is limited, especially in the 65-90 range, where there are only 49 women who smoke compared to 193 non-smokers
+```{r}
+library(ggplot2)
+
+
+# Create a bar plot
+ggplot(mortality_by_age_group, aes(x = Age_Group, y = Mortality_Rate, fill = Smoker)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Mortality Rate by Age Group and Smoking Status",
+       x = "Age Group",
+       y = "Mortality Rate",
+       fill = "Smoker") +
+  theme_minimal()
+
+
+```
+
+### The bar chart compares the mortality Rate for each group.
+
+# Questions 3:
+In order to avoid a bias induced by arbitrary and non-regular age groupings, it is possible to try to perform a logistic regression. If we introduce a Deathvariable of 1or 0to indicate whether the individual died during the 20-year period, we can study the Death ~ Agemodel to study the probability of death as a function of age according to whether one considers the group of smokers or non-smokers. Do these regressions allow you to conclude or not on the harmfulness of smoking? You will be able to propose a graphical representation of these regressions (without omitting the regions of confidence).
+
