@@ -1,0 +1,144 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Analysis Over the efficiency of a multi-threaded implementation of the QuickSort algorithm on multi-core machines,  we are studying the time that will take every different methodes individual, and if there is relation between the size of array and the time for sorting, you can find the data we use in folder data. 
+
+```{r warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+df <- read.csv("data/measurements_03_47.csv", header = T)
+df$Type <- gsub("\\s+", "", df$Type)
+head(df)
+summary(df)
+print(df)
+```
+
+### here we calculate the mean and the standard deviation, the confidence interval for time .
+
+```{r}
+dfsum <- group_by(df, Size, Type) %>% 
+  summarise(num = n(), mean = mean(Time), sd = sd(Time), se = 2*sd/sqrt(num),
+            .groups = 'drop')
+```
+```{r}
+print(dfsum)
+```
+
+### here we will plot the data with different colors for each unique value in the type column. 
+
+### first graph size with time without linear regression .
+```{r}
+ggplot(df,aes(x=Size,y=Time,color=Type)) + 
+  scale_color_brewer(palette="Set1") + theme_bw() + 
+  geom_jitter(alpha=.2,position=position_jitter(width = 0.1)) + 
+  geom_errorbar(data=dfsum,width=0.1, aes(y=mean,ymin=mean-se,ymax=mean+se)) + 
+  geom_point(data=dfsum,shape=25, size=1, aes(y=mean,color=Type))
+```
+### second graph size and time with linear regression.
+```{r}
+ggplot(df,aes(x=Size,y=Time,color=Type)) + 
+  scale_color_brewer(palette="Set1") + theme_bw() + 
+  geom_jitter(alpha=.2,position = position_jitter(width = 0.1)) + 
+  geom_errorbar(data=dfsum,width=0.1, aes(y=mean,ymin=mean-se,ymax=mean+se)) + 
+  geom_point(data=dfsum,shape=25, size=1, aes(y=mean,color=Type))+
+  geom_smooth(method="lm",linewidth=0.1)
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+### First we will see the Parallel method for Quicksort algorithm.
+
+### We can start with Filter type column .
+
+```{r}
+dfforlm = df %>% filter(Type == "Parallel")
+print(dfforlm)
+
+```
+### we will try to use linear regression for there type of data wth simple function.
+
+```{r}
+reg <- lm(Time ~ Size,data = dfforlm)
+summary(reg)
+```
+### so what we knew from the LR model is that we can see the estimated values for slope and the constant the value of time when size is zero are quite small also what is the range for these values +-std error, we can see the test like F test, and the p-value is too small means reject the null hypothesis ( consider the coefficients zero)
+```{r}
+ggplot(dfforlm,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "lm"
+                                                                     , formula = y ~ x,geom = "smooth") 
+```
+
+
+```{r}
+par(mfrow=c(2,2));plot(reg);par(mfrow=c(1,1))
+```
+
+
+
+
+### from the above graph fitted value vs residuals I am really not sure here is there pattern or not we need more measurements for this situation in different sizes like n the middel.
+
+
+### now let's see another function with a linear regression model but now we make it more oriented to our problem since the complexity for the quick sort is n log n approximately.
+```{r}
+reg2 <- lm(Time ~ log(Size)+Size^2,data = dfforlm)
+summary(reg2)
+```
+
+```{r}
+ggplot(dfforlm,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "lm", formula = y ~ log(x)+x^2,geom = "smooth") 
+```
+
+
+### we can see how is the model fit the  points very well but can we consider the model good ? maybe , but let see the residual points and the summary of the model.
+
+
+
+```{r}
+par(mfrow=c(2,2));plot(reg2);par(mfrow=c(1,1))
+```
+
+### From the residuals vs fitted value graph, it is apparent that there is no discernible pattern, resembling more of a random noise distribution. This observation suggests that the model performs well, exhibiting a good fit. However, it is crucial to conduct further experimentation, particularly in the mid-range of values. Drawing a line between two points may seem straightforward, but additional experiments are warranted to confirm the model's reliability, especially as the line begins to exhibit curvature. 
+
+
+### we will try with Sequential method for QuickSort Algorithm.
+### filter first  on type column.
+
+```{r}
+dfforlm2 = df %>% filter(Type == "Sequential")
+print(dfforlm2)
+
+```
+### the linear model algo wwith summary and some graphs about how good our model .
+```{r}
+reg3 <- lm(Time ~ Size,data = dfforlm2)
+summary(reg3)
+par(mfrow=c(2,2));plot(reg3);par(mfrow=c(1,1))
+```
+```{r}
+ggplot(dfforlm2,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "lm", formula = y ~ x,geom = "smooth")
+```
+
+### The linear model with different equation.
+```{r}
+reg4 <- lm(Time ~ log(Size)+Size^2,data = dfforlm2)
+summary(reg4)
+par(mfrow=c(2,2));plot(reg4);par(mfrow=c(1,1))
+```
+
+```{r}
+ggplot(dfforlm,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "lm", formula = y ~ log(x)+x^2,
+                                                                     geom = "smooth") 
+```
+
