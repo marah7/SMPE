@@ -1,0 +1,142 @@
+---
+title: "French given names per year per department"
+author: "Lucas Mello Schnorr, Jean-Marc Vincent"
+date: "October, 2022"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# The problem context
+The aim of the activity is to develop a methodology to answer a specific question on a given dataset. 
+
+The dataset is the set of Firstname given in France on a large period of time. 
+[https://www.insee.fr/fr/statistiques/2540004](https://www.insee.fr/fr/statistiques/fichier/2540004/dpt2021_csv.zip), we choose this dataset because it is sufficiently large, you can't do the analysis by hand, the structure is simple
+
+
+You need to use the _tidyverse_ for this analysis. Unzip the file _dpt2020_txt.zip_ (to get the **dpt2020.csv**). Read in R with this code. Note that you might need to install the `readr` package with the appropriate command.
+
+## Download Raw Data from the website
+```{r}
+file = "dpt2021_csv.zip"
+if(!file.exists(file)){
+  download.file("https://www.insee.fr/fr/statistiques/fichier/2540004/dpt2021_csv.zip",
+	destfile=file)
+}
+unzip(file)
+```
+
+## Build the Dataframe from file
+
+```{r}
+library(tidyverse)
+
+FirstNames <- read_delim("dpt2021.csv",delim=";")
+```
+
+All of these following questions may need a preliminary analysis of the data, feel free to present answers and justifications in your own order and structure your report as it should be for a scientific report.
+```{r}
+# Summary of the data
+data_summary <- summary(FirstNames)
+print(data_summary)
+```
+
+```{r}
+head_table <- head(FirstNames,10)
+print(head_table)
+```
+```{r}
+install.packages("conflicted")
+library(conflicted)
+
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+
+```
+
+
+1. Choose a firstname and analyse its frequency along time. Compare several firstnames frequency
+
+```{r}
+# Load required libraries
+library(tidyverse)
+
+# Read data with semicolon delimiter
+FirstNames <- read_delim("dpt2021.csv", delim = ";", show_col_types = FALSE)
+
+# Selected names
+selected_names <- c("CLÉMENCE", "HÉLOÏSE")
+
+# Filter data for the selected names and valid years 
+filtered_data <- FirstNames %>%
+  filter(preusuel %in% selected_names) %>%
+  filter(str_detect(annais, "^\\d{4}$")) %>%
+  mutate(annais_numeric = as.numeric(annais)) %>%
+  filter(annais_numeric %% 5 == 0)
+
+# Group and summarize the filtered data
+grouped_data <- filtered_data %>%
+  group_by(annais, preusuel) %>%
+  summarise(total_occurrences = sum(nombre, na.rm = TRUE), .groups = "drop")
+
+# Create a bar chart with bars next to each other for each year
+ggplot(grouped_data, aes(x = annais, y = total_occurrences, fill = preusuel)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Total Occurrences of Selected Names (Every 5 Years)",
+       x = "Year",
+       y = "Total Occurrences",
+       fill = "First Name") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, angle = 60, hjust = 1))  # Adjust the size parameter and angle 
+
+
+
+
+```
+
+
+2. Establish by gender the most given firstname by year. Analyse the evolution of the most frequent firstname.
+```{r}
+
+# Remove rows with NA values in the 'annais' column
+FirstNames <- FirstNames[complete.cases(FirstNames$annais), ]
+
+# Find the most frequent name for each gender in each year
+most_frequent_names <- FirstNames %>%
+  group_by(sexe, annais, preusuel) %>%
+  summarise(total_occurrences = sum(nombre), .groups = "drop") %>%
+  group_by(sexe, annais) %>%
+  arrange(desc(total_occurrences)) %>%
+  slice(1) %>%
+  ungroup()
+# Convert 'annais' to numeric
+most_frequent_names$annais <- as.numeric(as.character(most_frequent_names$annais))
+most_frequent_names <- most_frequent_names %>%
+  filter(annais %% 5 == 0)
+
+# Determine the color for each year based on gender
+most_frequent_names <- most_frequent_names %>%
+  mutate(color = ifelse(sexe == 1, "black", "red"))
+
+# Create a bar chart with facets for each gender
+p<-ggplot(most_frequent_names, aes(x = as.factor(annais), y = total_occurrences, fill = color, label = preusuel)) +
+  geom_bar(stat = "identity") +
+  geom_text(position = position_stack(vjust = 0.1), size = 3, color = "white", angle = 90, hjust = 0) +  # Add labels vertically with white text
+  labs(title = "Most Frequent First Name Over Time (Every 5 Years)",
+       x = "Year",
+       y = "Count") +
+  scale_fill_identity() +  
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 8, angle = 60, hjust = 1),
+        axis.text.y = element_text(size = 6)) +  # Adjust text size for y-axis  
+  facet_grid(sexe ~ ., scales = "free_y" ,labeller = labeller(sexe = c("1" = "Men", "2" = "Women"))) +
+  theme(legend.position = "none")  # Remove default legend
+
+print(p)
+```
+
+3. Optional : Which department has a larger variety of names along time ? Is there some sort of geographical correlation with the data?
