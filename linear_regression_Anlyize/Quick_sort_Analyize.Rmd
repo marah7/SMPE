@@ -44,6 +44,7 @@ ggplot(df,aes(x=Size,y=Time,color=Type)) +
   geom_errorbar(data=dfsum,width=0.1, aes(y=mean,ymin=mean-se,ymax=mean+se)) + 
   geom_point(data=dfsum,shape=25, size=1, aes(y=mean,color=Type))
 ```
+
 ### second graph size and time with linear regression.
 ```{r}
 ggplot(df,aes(x=Size,y=Time,color=Type)) + 
@@ -132,7 +133,10 @@ ggplot(dfforlm,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "l
 ```{r}
 par(mfrow=c(2,2));plot(reg6);par(mfrow=c(1,1))
 ```
+
+
 ### we can see how the residual vs fitted is almost noise and the model is good but still we need more measurements in the middle and around the middle but the shape of the function related to our problem that will help us to consider it good, also from the R-squared:  0.9944 we see it above for it.
+
 
 ### we will try with Sequential method for QuickSort Algorithm.
 ### filter first  on type column.
