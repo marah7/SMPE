@@ -112,6 +112,28 @@ par(mfrow=c(2,2));plot(reg2);par(mfrow=c(1,1))
 ### From the residuals vs fitted value graph, it is apparent that there is no discernible pattern, resembling more of a random noise distribution. This observation suggests that the model performs well, exhibiting a good fit. However, it is crucial to conduct further experimentation, particularly in the mid-range of values. Drawing a line between two points may seem straightforward, but additional experiments are warranted to confirm the model's reliability, especially as the line begins to exhibit curvature. 
 
 
+### here we will use n*log n equation.
+```{r}
+reg6 <- lm(Time ~ log(Size)*Size,data = dfforlm)
+summary(reg6)
+```
+### Question for me:
+### I would like you to give me your opinion about these results and why the pr not too small as other functions.
+
+```{r}
+ggplot(dfforlm,aes(x = Size, y = Time)) + geom_point() + stat_smooth(method = "lm",
+                                                            formula = y ~ log(x)*x, geom = "smooth") 
+```
+
+
+
+### see the graphs to evalute the model.
+
+```{r}
+par(mfrow=c(2,2));plot(reg6);par(mfrow=c(1,1))
+```
+### we can see how the residual vs fitted is almost noise and the model is good but still we need more measurements in the middle and around the middle but the shape of the function related to our problem that will help us to consider it good, also from the R-squared:  0.9944 we see it above for it.
+
 ### we will try with Sequential method for QuickSort Algorithm.
 ### filter first  on type column.
 
