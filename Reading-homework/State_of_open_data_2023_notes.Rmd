@@ -1,0 +1,32 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Marah Notes about the State of Open Data 2023
+
+1. A survey with approximately 55 questions was conducted, focusing on individuals who had conducted research within the past five years.
+
+2. Key Points:
+   a. Support is crucial for making data open, understanding copyright issues, and obtaining permission from funders to publish data.
+   b. Awareness of data management is lacking, and there's a need to allocate time for management.
+   c. Despite knowledge, the use of AI tools for data collection is low.
+   d. Researchers express concerns about obstacles in data storage locations.
+   e. Data sharing is essential for research transparency.
+   f. Concerns include data misuse, the need for permission from private companies and hospitals, and local legislation affecting data release in countries like Canada and China.
+   g. Citation of research papers is a motivating factor for data dissemination.
+
+3. Interesting Findings:
+   a. Ethiopia, India, Germany, and the United Kingdom show strong support for open data, while Japan has the lowest support.
+   b. The Bill & Melinda Gates Foundation is the largest funder of Ethiopian publications with a strong open data policy.
+   c. Subject-based outreach and education are essential for promoting open practices.
+   d. "A saying asserts that acceptance of new scientific facts often occurs when a new generation familiar with them replaces opponents."
+   e. Increased data sharing enhances confidence in research papers.
+   f. Support and awareness are crucial to address researchers' concerns about data publication.
+   g. The trend is to make Data Management Plans (DMP) mandatory in the future, tailored to each domain.
+   h. Focus on working towards the positive impact of AI on open science.
+
+4. Additional Notes:
+   a. Page number 13 is not well understood.
+   b. The cost of publication needs further explanation.
