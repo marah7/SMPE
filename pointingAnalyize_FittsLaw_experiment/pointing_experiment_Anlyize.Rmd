@@ -1,0 +1,173 @@
+---
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Loading libraries
+
+
+```{r loading ggplot2}
+library(ggplot2)
+
+
+```
+
+
+## Loading data For the first experiment
+
+
+```{r loading csv data into a dataframe}
+library(readxl)
+Data_Mean_128_16_first <- read_excel("Data_first_experiment_128_16/Data_Mean_128_16_first.xlsx")
+Data_128_16_first <- read_excel("Data_first_experiment_128_16/Data_128_16_first.xlsx")
+
+
+```
+
+
+
+## Plotting the data together with the linear regression
+
+
+```{r}
+ggplot(Data_Mean_128_16_first, aes(ID, MT)) +
+  geom_point() +
+  geom_smooth(method='lm')
+```
+#### we can see little impact from ID TO MT, Let us go with linear model summary to see more details.
+
+
+## Linear modelling
+
+```{r linear modeling}
+model1 <- lm(MT~ID, data = Data_Mean_128_16_first)
+summary(model1)
+```
+
+
+
+#### Similary to Fitts' law says, ID does seem to have an impact on the movement time. 
+#### Also, the R2=0.869 reported by the [experimental software](http://ergo.human.cornell.edu/FittsLaw/FittsLaw.html) and the R2=0.7923 I find here, are different ,  but they are close to each other , but this for mean data not for Raw. 
+
+
+```{r}
+par(mfrow=c(2,2));plot(model1);par(mfrow=c(1,1))
+
+```
+
+
+
+
+
+
+#### we can see from the residuLs VS Fitted there s no clear pattern (if i really undersant the pattern from this graph :) ),
+#### so we will not reject this model , and we can consider it good , also the pvalue it is inder 0.05 .
+#### note this data for the mean not the raw.
+
+
+#### now ,  same steps but for Raw Data.
+```{r }
+ggplot(Data_128_16_first, aes(ID, MT)) +
+  geom_point() +
+  geom_smooth(method='lm')
+
+```
+
+
+
+
+#### Here the we confuse more because the impact doesnt appear that  much  and we have more variablity between the points.
+
+```{r }
+model2 <- lm(MT~ID, data = Data_128_16_first)
+summary(model2)
+```
+
+#### From the summary we can see the R-squared is smaller for Raw data ,that mean there are alot of residuals are not explained by the model.
+
+
+
+## Plotting the residuals vs fitted.
+
+
+```{r}
+par(mfrow=c(2,2));plot(model2);par(mfrow=c(1,1))
+```
+
+####  From the ploting graph we cant see there is a real impact from ID on MT , but for the  model we can see the fitted vs residuals we cant reject the model and we can see the p value less than 0.05 which is good so we can go with this model ,but the movement values will not just depend on ID , there are factors like the device we use , the age of person , how much he concetrate , does he did somthing else while he doing the experiment , does he use mouse or something else.
+
+
+
+## Second Experiment , with same steps from above.
+
+```{r}
+
+library(readxl)
+Data_Mean_12_6_second <- read_excel("Data_second_experiment_12_6/Data_Mean_12_6_second.xlsx")
+Data_12_6_second <- read_excel("Data_second_experiment_12_6/Data_12_6_second.xlsx")
+
+
+```
+
+```{r }
+ggplot(Data_Mean_12_6_second, aes(ID, MT)) +
+  geom_point() +
+  geom_smooth(method='lm')
+
+
+```
+#### we cant see the real impact of ID on MT.
+
+```{r}
+model3 <- lm(MT~ID, data = Data_Mean_12_6_second)
+summary(model3)
+
+```
+#### The R-squared bigger than we get from the software 0.640,becuase we reduce the data,still we will not reject the 
+#### model,since we have p-value less than 0.05 and there is impact for ID on MT without forgetting the impact for other
+#### factors.
+
+```{r}
+par(mfrow=c(2,2));plot(model3);par(mfrow=c(1,1))
+```
+
+
+
+
+####  Also from this graph residual vs fitted so we cant see the pattern so we cant reject the model , and there is a little impact from the ID on th MT but As I said above there are another factors. 
+
+
+####  Now for Raw Data,
+
+```{r}
+
+ggplot(Data_12_6_second, aes(ID, MT)) +
+  geom_point() +
+  geom_smooth(method='lm')
+
+```
+
+```{r }
+model4 <- lm(MT~ ID, data = Data_12_6_second)
+summary(model4)
+
+
+```
+#### The R-sequared smaller than above (Mean Data)and smaller than we get from the software which was 0.640,
+#### Note:maybe because we reduce the number of points so the R-squared wasnt accurate in mean Data, and was bigger.  
+
+```{r }
+
+par(mfrow=c(2,2));plot(model4);par(mfrow=c(1,1))
+
+```
+
+#### We can't reject the model here, there are another factors have impact on the movement related to the human and the device.
