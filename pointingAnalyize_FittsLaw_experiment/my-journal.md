@@ -76,8 +76,8 @@ The Webpage returned the following results:
 ##### Second Experiment:
 - I performed 77 pointing errors
 - A Fitts modelling in the form of MT = 184.338 + 143.258log(A/W + 1) with RSquare =0.640
-- The [table of mean _MT_](./Data_first_experiment_128_16/Data_Mean_128_16_first.xlsx) that I provide in the [data folder](./Data_first_experiment_128_16/)
-- The [table of raw pointing data](./Data_first_experiment_128_16/Data_128_16_first.xlsx) that I provide in [data folder](./Data_first_experiment_128_16/)
+- The [table of mean _MT_](./Data_second_experiment_12_6/Data_Mean_12_6_second.xlsx) that I provide in the [data folder](./Data_second_experiment_12_6/)
+- The [table of raw pointing data](.Data_second_experiment_12_6/Data_12_6_second.xlsx) that I provide in [data folder](.Data_second_experiment_12_6/)
 
 
 #### Data analysis

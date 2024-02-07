@@ -164,7 +164,7 @@ summary(model_smokers)
 model_nonsmokers <- glm(Death ~ Age, family = binomial, data = nonsmokers_data)
 summary(model_nonsmokers)
 ```
-### we can see how the age has impact on death variable from the output above.
+### we can see how the age has impact on death variable  from the output above.
 ```{r}
 
 
