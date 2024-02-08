@@ -33,4 +33,9 @@
 - [✅] Here is an opportunity to practice your data curation/analysisskills by producing the First name/last name analysis in a computational document. I encourage you to use dplyr and ggplot for this analysis.
 
 ### Homeworks 
+- [✅] Presentation  Robots
+- [✅] Reading about open Data .
+- [✅] Empirical evaluation of Fitts' law.
+- [✅] QuickSort.
+- [✅] Doe Shiny App.
 
