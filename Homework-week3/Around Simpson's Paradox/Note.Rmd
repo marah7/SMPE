@@ -1,0 +1,1 @@
+##I was trying to rename the files from DataAnlyize to Simpson’s-Paradox_Anlyize_Marah , but this led to have duplicate files in githup , so you can check just the files with Simpson’s-Paradox_Anlyize_Marah names pdf or rmd type.
