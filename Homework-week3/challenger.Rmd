@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
+# Marah Notes.
 ## A good start is with the data display.
 ```{r}
 data = read.csv("module2_exo5_shuttle.csv",header=T)
@@ -13,7 +14,8 @@ data
 ## I think we shouldn't remove the 0 malfuntion , that will be missing some good information about the data.
 
 ```{r}
-logistic_reg = glm(data=data, Malfunction/Count ~ Temperature, weights=Count,family=binomial(link='logit'))
+logistic_reg = glm(data=data, Malfunction/Count ~ Temperature, weights=Count,
+                   family=binomial(link='logit'))
 summary(logistic_reg)
 ```
 ## I don't like how there is output without a good explanation.
@@ -21,9 +23,10 @@ summary(logistic_reg)
 ```{r}
 plot(data=data, Malfunction/Count ~ Temperature, ylim=c(0,1))
 ```
-## Also, I think the graph from above was enough to understand that there is not a significant impact between temperature and the malfunction.
 
-## Here also  not a very good explanation a little complex .
+##  Also, I think the graph from above was enough to understand that there is not a significant impact between temperature and the malfunction.
+
+##  Here also not a very good explanation(if your audience is not familiar with this kind of output). It is a little complex.
 Suppose that each of the six O-rings is damaged with the same
 probability and independently of the others and that this probability
 depends only on the temperature. If $p(t)$ is this probability, the
@@ -32,7 +35,7 @@ temperature $t$ follows a binomial law with parameters $n=6$ and
 $p=p(t)$. To link $p(t)$ to $t$, we will therefore perform a
 logistic regression.
 
-## Why we are doing this if there is no impact between temp and malfunction? , after the last  lecture, I got the answer, we should make it by numbers. 
+## Why are we doing this if there is no impact between temp and malfunction? , after the lecture, I got the answer, we should make it by numbers not just visualizing.
 ```{r}
 # shuttle=shuttle[shuttle$r!=0,] 
 tempv = seq(from=30, to=90, by = .5)
@@ -40,4 +43,5 @@ rmv <- predict(logistic_reg,list(Temperature=tempv),type="response")
 plot(tempv,rmv,type="l",ylim=c(0,1))
 points(data=data, Malfunction/Count ~ Temperature)
 ```
-## Note:I  should determine the audience for my  computational document to know what I should explain and what I shouldn't.
+
+##  Note: I should determine the audience for my  computational document to know what I should explain and what I shouldn't.
