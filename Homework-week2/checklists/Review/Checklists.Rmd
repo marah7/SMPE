@@ -12,7 +12,8 @@ output:
 
 I find it challenging to get a clear understanding of each year from this graph.
 
-![Bananas](bananas.png)
+
+![Bananas](../Images_to_review/bananas.png)
 
 #### Data
 
@@ -63,11 +64,13 @@ I find it challenging to get a clear understanding of each year from this graph.
 -   [ ] The graphic is referenced in text
 -   [ ] The text comment the figure
 
+#### Comment: The graph is not good at all. It contains many colors, and the banana drawing also does not sing anything. I think that the goal of the graph is to compare countries in terms of exported quantities, and this is difficult to read from this graph.
+
 ## Second graph
 
 ### Death
 
-![Death](gun-death.png)
+![Death](../Images_to_review/gun-death.png)
 
 #### Data
 
@@ -118,11 +121,13 @@ I find it challenging to get a clear understanding of each year from this graph.
 -   [x] The graphic is referenced in text
 -   [ ] The text comment the figure
 
+####  Comment: As for this graph, I find it to be a beautiful and expressive form, but it is not readable at first glance. It requires a little thought to know the purpose of the representation of killing. We lose people the more killing there is, and this is not an increase, but rather a loss for us, which means we are down, as the author reversed the vertical axis and made it start from the end
+
 ## Third graph
 
 ### COVID-19
 
-![COVID-19](COVID-19.png)
+![COVID-19](../Images_to_review/COVID-19.png)
 
 #### Data
 
@@ -172,3 +177,8 @@ I find it challenging to get a clear understanding of each year from this graph.
 -   [x] The title is meaningful and self contained
 -   [x] The graphic is referenced in text
 -   [ ] The text comment the figure
+
+####  Comment : There is a problem with the x-axis and the vertical axis, as the horizontal axis is not drawn clearly, which creates confusion for the reader. Also, the vertical axis, the distance between 100 and 200, does not correspond to the distance from 0 to 100, and this is unacceptable In addition, the vertical axis should or usually start from the number 0. Here it started on the 30.
+
+###  Note : you can find sketches (idea to make the graphs better) for The Bananas and  The Covid graph in the folder Sketches.
+
