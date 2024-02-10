@@ -8,25 +8,31 @@ output:
 ```{r}
 data = read.csv("module2_exo5_shuttle.csv",header=T)
 data
+
+data_without_malfunction_0 = data[data$Malfunction>0,]
+data_without_malfunction_0
+
+
 ```
 
-## The data is too small, which will affect the results.
-## I think we shouldn't remove the 0 malfuntion , that will be missing some good information about the data.
 
-```{r}
-logistic_reg = glm(data=data, Malfunction/Count ~ Temperature, weights=Count,
-                   family=binomial(link='logit'))
-summary(logistic_reg)
-```
-## I don't like how there is output without a good explanation.
+
+## The data is too small, which will affect the results , and the estimate.
+## I think we shouldn't remove the 0 malfuntion , that will be missing some good information about the data and its distribution.
+## I will ty the both with and without 0 .
+
+
+
+## Ploting the data without remove anthing. 
 
 ```{r}
 plot(data=data, Malfunction/Count ~ Temperature, ylim=c(0,1))
 ```
 
-##  Also, I think the graph from above was enough to understand that there is not a significant impact between temperature and the malfunction.
+##  Also, I think the graph from above was enough to understand that there is not a significant impact between temperature and the malfunction , although .
 
-##  Here also not a very good explanation(if your audience is not familiar with this kind of output). It is a little complex.
+##  Note: I should determine the audience for my  computational document to know what I should explain and what I shouldn't.
+
 Suppose that each of the six O-rings is damaged with the same
 probability and independently of the others and that this probability
 depends only on the temperature. If $p(t)$ is this probability, the
@@ -35,13 +41,47 @@ temperature $t$ follows a binomial law with parameters $n=6$ and
 $p=p(t)$. To link $p(t)$ to $t$, we will therefore perform a
 logistic regression.
 
-## Why are we doing this if there is no impact between temp and malfunction? , after the lecture, I got the answer, we should make it by numbers not just visualizing.
+## Here as they did without the malfunction equated to 0.
+
+```{r}
+logistic_reg1 = glm(data=data_without_malfunction_0, Malfunction/Count ~ Temperature, weights=Count,
+                   family=binomial(link='logit'))
+summary(logistic_reg1)
+```
+## We can  see the Pr(>|z|) for Temperature more than 0.05 which indicates a nonsignificant impact.
+
+```{r}
+tempv = seq(from=30, to=90, by = .5)
+rmv <- predict(logistic_reg1,list(Temperature=tempv),type="response")
+plot(tempv,rmv,type="l",ylim=c(0,1))
+points(data=data_without_malfunction_0, Malfunction/Count ~ Temperature)
+```
+
+## We can see how the estimator doesn't work very well here (which means we cant tell if the temperature has impact or not) .
+
+
+
+## New test :to see from where the problem of under estimation: Here we will see the estimation when we dont remove the malfunction 0.
+
+```{r}
+logistic_reg2 = glm(data=data, Malfunction/Count ~ Temperature, weights=Count,
+                   family=binomial(link='logit'))
+summary(logistic_reg2)
+```
+##  We can there is little impact from the temperature because the P(>|z|) 0.01 is less than. 
+
 ```{r}
 # shuttle=shuttle[shuttle$r!=0,] 
 tempv = seq(from=30, to=90, by = .5)
-rmv <- predict(logistic_reg,list(Temperature=tempv),type="response")
+rmv <- predict(logistic_reg2,list(Temperature=tempv),type="response")
 plot(tempv,rmv,type="l",ylim=c(0,1))
 points(data=data, Malfunction/Count ~ Temperature)
 ```
 
-##  Note: I should determine the audience for my  computational document to know what I should explain and what I shouldn't.
+##   we can see how with the low degree for tempreture and with malfunction 0 we can get a good estimator where with low degree give us a high probablity for failure . 
+
+
+
+##  The data is so small and they removed the malfunction when it is equal to zero, also the temperature there are not enough experiments when the temperature low degree all of them affect the estimation.
+
+##  In conclusion, if there are human souls, we must do more experiments and not limit ourselves to experimenting with biased data, despite the change in the estimator and its giving different results when we added the 0 for the malfunction column and did not remove it, which enriched the distribution, but we still need well distributed Especially with the variables we mentioned in the prediction.
