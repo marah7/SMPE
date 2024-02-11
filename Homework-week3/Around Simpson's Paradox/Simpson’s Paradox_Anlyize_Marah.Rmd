@@ -75,16 +75,13 @@ Why is this result surprising? Can you explain this paradox? Similarly, you may 
 ```{r}
 # Remove rows with missing values 
 data <- na.omit(data)
-
 # Create age groups
 data$Age_Group <- cut(data$Age, breaks = c(18, 34, 54, 64, 90), 
                       labels = c("18-34", "35-54", "55-64", "65-90"))
-
 # Count the number of women in each age group based on smoking status
 count_by_age_group <- data %>%
   group_by(Smoker, Age_Group) %>%
   summarize(Count = n(), .groups = "drop")
-
 print(count_by_age_group)
 ```
 ### The table provides the count of women in each age group, allowing us to observe the distribution across different age categories.
@@ -224,10 +221,9 @@ p <- p + scale_color_manual(name = "Group",
 
 # Print the plot
 print(p)
-
 ```
 
 ###  we can see from model above how the age between 35-65 has a higher probabilty compare to nonsmoker people in the same age.
 ###  also we can see in general people with age 65 and more have a higher propabilty to die in smokers and nonsmokers people , we should not forget the number of people with age more than 75 is small when the status is smokers so  we can see a real impact from smoking (maybe because most of them dead in earlier).
 
-
+### I finished my evaluation of my peers' work and they were good. I put my notes in a MOOC and now I am waiting for others to evaluate my work.
