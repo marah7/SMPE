@@ -100,8 +100,7 @@ ggplot(grouped_data, aes(x = annais, y = total_occurrences, fill = preusuel)) +
        y = "Total Occurrences",
        fill = "First Name") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 10, angle = 60, hjust = 1))  
-# Adjust the size parameter and angle 
+  theme(axis.text.x = element_text(size = 10, angle = 60, hjust = 1))  # Adjust the size 
 
 
 
