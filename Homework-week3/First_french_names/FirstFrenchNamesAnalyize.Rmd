@@ -9,6 +9,8 @@ output:
     df_print: paged
 ---
 
+#  Marah Analyize 2023 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -164,3 +166,58 @@ print(p)
 ###  We can see how Marie is the most frequent name in women , and Jean in men.
 
 ###  3. Optional : Which department has a larger variety of names along time ? Is there some sort of geographical correlation with the data?
+
+
+###  Answer 3:
+
+### For this quuestion lets start by groupby on the dpt and annais column to see for each dpt in each year how many unique names the have.
+
+```{r}
+FirstNames
+FirstNames_grouped <- FirstNames %>%
+  group_by(dpt, annais) %>%
+  summarise(unique_names = n_distinct(preusuel)) %>%
+  ungroup()
+FirstNames_grouped
+
+
+```
+### Now lets sum for each dpt over the year.
+```{r}
+FirstNames_unique_names_per_dpt <- FirstNames_grouped %>%
+  group_by(dpt) %>%
+  summarise(total_unique_names = sum(unique_names))
+
+FirstNames_unique_names_per_dpt
+```
+```{r}
+larger_variety_of_names <- max(FirstNames_unique_names_per_dpt$total_unique_names, na.rm = TRUE)
+
+# Identify the row where total_unique_names equals the maximum value
+max_rows_indices <- which(
+  FirstNames_unique_names_per_dpt$total_unique_names == larger_variety_of_names)
+
+# Subset the FirstNames_unique_names_per_dpt to get the row with the maximum total_unique_names
+The_largest_variety_dpt <- FirstNames_unique_names_per_dpt[max_rows_indices, ]
+
+The_largest_variety_dpt
+
+```
+
+###  So it is department number 75. 
+
+###  Let us draw the data .
+
+```{r}
+library(ggplot2)
+top_30_df <- FirstNames_unique_names_per_dpt %>% slice_max(order_by = total_unique_names, n = 30)
+top_30_df
+ggplot(top_30_df, aes(x = reorder(dpt, -total_unique_names), y = total_unique_names)) +
+  geom_bar(stat = "identity", fill = "steelblue" , width=0.5) +
+  theme_minimal() +
+  labs(x = "Department", y = "Total Unique Names", title = "Total Unique Names by Department") 
+  
+
+```
+
+###  I don't think there is a geographical correlation ,to be honest, I didnt understand the meaning of the second part of the third question , I mean, I did not find any geographical data except the  department and I do not know which department belongs to any city ,However I found different departments with the same distribution, so I answered that there is no geographical correlation.
