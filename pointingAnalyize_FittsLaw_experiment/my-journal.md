@@ -60,7 +60,7 @@ using Dell XPS , during night , mouse , right hand , half tired.
 I ran the experiment from the above Webpage with 6,3,and 4 widths and with 12,25,52 amplitudes, with 10 trials for each combination. 
 
 Circumstances:
-using Dell XPS , during night , mouse , right hand , 70% tired, I didnt like the game.
+using Dell XPS , during night , mouse , right hand , 70% tired, I didn't like the game.
 
 #### Data collected
 
@@ -83,3 +83,5 @@ The Webpage returned the following results:
 #### Data analysis
 
 My data analysis is performed and commented in the [pointing_experiment_Analyize.Rmd file](./analysis/pointingAnalysis.Rmd) (R markdown file). 
+
+#### Note: see the word file not the pdf it is more sorted.

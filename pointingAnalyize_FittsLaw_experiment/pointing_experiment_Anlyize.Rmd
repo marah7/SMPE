@@ -1,9 +1,9 @@
 ---
 output:
   pdf_document: default
-  word_document: default
   html_document:
     df_print: paged
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -42,6 +42,7 @@ ggplot(Data_Mean_128_16_first, aes(ID, MT)) +
   geom_point() +
   geom_smooth(method='lm')
 ```
+
 #### we can see little impact from ID TO MT, Let us go with linear model summary to see more details.
 
 
@@ -122,8 +123,8 @@ ggplot(Data_Mean_12_6_second, aes(ID, MT)) +
   geom_point() +
   geom_smooth(method='lm')
 
-
 ```
+
 #### we cant see the real impact of ID on MT.
 
 ```{r}
@@ -171,3 +172,4 @@ par(mfrow=c(2,2));plot(model4);par(mfrow=c(1,1))
 ```
 
 #### We can't reject the model here, there are another factors have impact on the movement related to the human and the device.
+#### Note:also there is important thing , which is we don't know how they are calculate the R-squared in their software.
