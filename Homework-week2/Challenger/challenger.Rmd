@@ -3,7 +3,13 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Marah Notes.
+# About the analysis 
+
+For exercising your critical mind, we suggest that you work on an historical dataset, the one used in the analysis of the risk of failure of the O-ring seals of the space shuttle Challenger, which became tragically famous when it exploded 73 seconds after take-off, causing the death of the crew of seven astronauts. The day before take-off, a multi-hour teleconference had been dedicated to estimating the risk of taking off on an execptionally cold morning, but the flight was maintained.
+
+We provide you with the dataset and a part of the analysis performed at the time. Your mission, should you choose to accept it, is to inspect this analysis to find what has led to a serious under-estimation of the risk of failure. You will then be able to set the record straight concerning the risk of the take-off.
+
+# Marah analysis.
 ## A good start is with the data display.
 ```{r}
 data = read.csv("module2_exo5_shuttle.csv",header=T)
