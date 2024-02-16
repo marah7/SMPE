@@ -8,9 +8,11 @@ output:
   - All eleven variables are in [0,1]. The goal is to find the combination of variables where the output is the higher. This may require to identify which variables are significant, guessing a model for the system, etc.
   - The website will record the combinations you try and you should write a small report on how you proceed. You'll find your login in front of your name in the [[https://codimd.math.cnrs.fr/Dai2ZzqzTwezOMZVIyMN-g?view#Registered-Students][pad]] and you should replace =user_a7710= by this login.
  
+ 
+ 
 ##  Answer: 
-## **ShinyApp Report**
-### 1. At first (from the first to the fifteenth experiment), I did not understand what I should do and whether I should enter all the lines or just a line. So I started with random assignments to enter 11 numbers in each line, not to specify. Sometimes I put in large numbers and other times I put in smaller numbers. When the resulting numbers started to give very different results, I noticed that I had to follow a plan to find out. What are the variables that give a basic effect? ​​So I followed a simple plan: turn off(0) and turn on (more than zero smaller than 1) alternately.
+###  **ShinyApp Report**
+### 1. At first (from the first to the fifteenth experiment), I did not understand what I should do and whether I should enter all the lines or just a line. So I started with random assignments to enter 11 numbers in each line, not to specify. Sometimes I put in large numbers and other times I put in smaller numbers. When the resulting numbers started to give very different results, I noticed that I had to follow a plan to find out. What are the variables that give a basic effect? So I followed a simple plan: turn off(0) and turn on (more than zero smaller than 1) alternately.
 
 ### 2. I wasn't paying attention that I could put the number 1 on the lines, so I added it and it gave me a small value in Experiment No. 52, but notice that in Experiment 51 and 53 the same numbers are in the variables, but the result is a little different. Perhaps the lines are related to each other in some way.
 
@@ -19,3 +21,4 @@ output:
 ### 4. The x1 has a big good effect on the y in high value situation more than the rest variables from 59,61 experiments.
 
 ### 5. 2024-01-11-02:22:58,0.7,0,0,0.7,0,0.7,0,0.7,0,0.1,0.6,3.35687553808329 this the biggest value until now from the experiment number 39.
+### 6. After I collected the data by hand and tried to play with the numbers to get the highest value I could get, I thought why not try generating random data and see if I get different better or worse results, you can find in the DoE file the analysis of two data sets, the first is randomly distributed Uniformly and the second I mixed the two types manually(the same I that give me 3.356 value) and randomly data.

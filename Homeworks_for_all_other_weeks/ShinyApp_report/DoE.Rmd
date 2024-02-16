@@ -1,295 +1,116 @@
 ---
-title: "DoE gamification"
-author: "Arnaud Legrand"
-date: "2024-01-18"
 output:
   pdf_document: default
   html_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+###   My computer not working so  I have to work on desktop from university so that why The generating of the random data doesnt exist here but however the data I took it from the software it is the the output of my generating before my laptop crashes.
 
+### I used random data see more precisely the varaibles that impact the value of y ,Note:the generating of the data was in my laptop.
 ```{r}
-library(ggplot2)
-library(dplyr)
-library(tidyr)
+
+
+data <- read.csv("NewData.csv", header = TRUE, stringsAsFactors = FALSE, sep = ",")
+
+
+data$Date <- as.POSIXct(data$Date, format = "%Y-%m-%d-%H:%M:%S")
+
+# View the first few rows 
+head(data)
+
 ```
-
-## Test when setting up the shiny app
-Using https://arnaud-legrand.shinyapps.io/design_of_experiments/?al1111 and injecting white noise (40 experiments) just to check that the shiny app was properly reset.
-
-I did not take notes on how I did this but here is how to get it:
-```{r}
-df=read.csv("Data",header=T)
-str(df)
-df = df[1:40,]
-```
-```{r}
-summary(df)
-```
-
-```{r}
-plot(df)
-```
-Not so readable. Let's focus on inputs and check how they are spread.
-
-```{r}
-df %>% select(-Date) %>% gather() %>% filter(key != "y") %>% ggplot(aes(x=value, group=key)) + geom_histogram() + facet_wrap(~key)
-```
-Well, there are not so many points and uniformity appears like a reasonable assumption. What about the output now ?
-
-```{r}
-df %>% select(-Date) %>% gather() %>% filter(key == "y") %>% ggplot(aes(x=value, group=key)) + geom_histogram() + facet_wrap(~key)
-```
-
-It's hard to tell what the influence of inputs may be but outputs appear to be distributed between -1 and 3 at the moment.
-
-## First interactions with the system
-### DoE
-The most common assumption to all models we have seen is that $y=f(x) + \epsilon$, with $\epsilon$ being modeled as a random variable. Let's start by checking this and see how much knowledge we can get on $\epsilon$.
-
-I would like to evaluate the fluctuation of $f(x)$ around its mean for different values of $x$ and test whether this fluctuation appears to depend on $x$ or not. 10 replications seems the least I should do for such test. So I will generate a few combinations of $x$ and I will generate these $x$ in a uniform way to avoid bias. There is thus no need for sophisticated method such as a space-filling design. We're in dimension 11 and we cannot afford that much samples anyway.
-
-```{r}
-set.seed(918682)
-space_dim = 11
-n_sample = 10
-n_replicates = 10
-x_init = runif(n=space_dim * n_sample, min=0, max=1)
-df_init = as.data.frame(matrix(data=x_init, ncol = space_dim))
-df_doe1 = data.frame()
-for(i in 1:n_replicates) {
-  df_doe1 = rbind(df_doe1,df_init)
-}
-df_doe1
-write.csv(x = df_doe1,file="df_doe1.csv", row.names = F)
-```
-
-### Analysis
-Let's get the corresponding results now (session has changed now...):
-```{r}
-df=read.csv("Data",header=T)
-str(df)
-df = df[41:60,]
-```
-
-Now let's evaluate mean and variability for each combination
-```{r}
-df %>% mutate(label=paste0(x1,"_",x2,"_",x3,"_",x4,"_",x5,"_",x6,"_",x7,"_",x8,"_",x9,"_",x10,"_",x11)) %>% group_by(label) %>% summarise(mean=mean(y), sd=sd(y))
-```
-
-All right, variability depending on $x$ appears quite large (and coherent with previous observations) compared to "measurement" variability (i.e., in [-1:3] compared to [0, 6e-03].) Furthermore variability does not appear to depend too much on inputs so pseudo-replication (measuring the same combination of values) should be of little use compared to replication (really randomizing inputs). The hardest part will thus be to come up with a decent model for $f$.
-
-## Influence of parameters
-
-### DoE
-Working in dimension 11 is way to large, let's try to evaluate which parameters are influent with a screening design. `FrF2` is the right package for this but classical fractionnal designs are probably too conservative so we'll play with `pb` instead. I had to install `FrF2` through `install.packages` as it is not in debian. :(
-
-```{r}
-library(FrF2)
-```
-
-Let's call `pb` several times in a row to concatenate several balanced designs.
-```{r}
-space_dim = 11
-n_repeat = 5
-n_replicates = 1
-df_doe2 = data.frame()
-
-for(i in 1:n_repeat) {
-  df_doe2 = rbind(df_doe2,
-                  pb(nruns = space_dim+1, default.levels = c(0,1), factor.names = paste0("x",1:11),
-                     replications = n_replicates, seed = 415234+i))
-}
-df_doe2
-```
-
-Let's check how many combinations I actually generated.
-
-```{r}
-df_doe2 %>% mutate(label=paste0(x1,"_",x2,"_",x3,"_",x4,"_",x5,"_",x6,"_",x7,"_",x8,"_",x9,"_",x10,"_",x11)) %>% select(label) %>% unique()
-```
-
-This fails, randomization in `pb` is only for the order, not for the values. Let's use dummy variables instead.
 
 
 ```{r}
-space_dim = 11
-n_repeat = 5
-n_replicates = 1
-df_doe2 = pb(nruns = n_repeat*(space_dim+1), default.levels = c(0,1), factor.names = paste0("x",1:11),
-                     replications = n_replicates, seed = 415234)
-df_doe2
+summary(data)
+```
+### lets try the linear model with the data.
+
+```{r}
+# Fit the linear model
+model <- lm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11, data = data)
+
+summary(model)
+
+```
+###  From above we can see the most important vaiables they are x1,x4,x9,x7 , so lets try to see model with them.
+```{r}
+# Fit the linear model
+model <- lm(y ~ x1 + x4 + x7 + x9 , data = data)
+
+# Check the summary of the model
+summary(model)
+```
+###  Ok we can see how the effect of x7 dispaear on y.
+```{r}
+par(mfrow = c(2, 2))  # Set up the plotting area to display 4 plots in a 2x2 grid
+plot(model)
+```
+
+###  Ok there is no pattern but there is a Lot of points not explained by the model.
+```{r}
+install.packages("car")
+library(car)
+crPlots(model)
+```
+
+
+###  Here we can see each individual variable, we can see how the X7 is almost a straight line.
+```{r}
+max_value <- max(data$y, na.rm = TRUE)
+max_value
+```
+```{r}
+data_subset <- data[c("x1", "x4","x7","x9", "y")]
+data_sorted_desc <- data_subset[order(data_subset$y, decreasing = TRUE), ]
+head(data_sorted_desc)
+```
+
+###  we can see the highest value for y is 3.225577 , with specific combination of values for the four variables.
+
+###  Now let see another data.
+
+###  Above is random uniform sampling let see if we add to this data my old data that I made it by my hand in the first place.
+```{r}
+
+data2 <- read.csv("NewDatawithmyhandData.csv", header = TRUE, stringsAsFactors = FALSE, sep = ",")
+
+
+data2$Date <- as.POSIXct(data2$Date, format = "%Y-%m-%d-%H:%M:%S")
+
+head(data2)
+
 ```
 
 ```{r}
-d = df_doe2 %>% mutate(label=paste0(x1,"_",x2,"_",x3,"_",x4,"_",x5,"_",x6,"_",x7,"_",x8,"_",x9,"_",x10,"_",x11))
-unique(d$label)
+
+# Fit the linear model
+model2 <- lm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11, data = data2)
+
+summary(model2)
+
 ```
-Great, let's run then.
+
+###  This data made add more variable that effect the y let us see if these impact is significant by plotting each variable.
 
 ```{r}
-write.csv(x = df_doe2[,1:11],file="df_doe2.csv", row.names = F, quote = F)
+# Fit the linear model
+model3 <- lm(y ~ x1 + x2 + x3 + x4 + x5 +x7+ x9, data = data2)
+summary(model3)
+crPlots(model3)
 ```
 
-### Analysis
-Let's get the corresponding results now (session has changed again...):
+###  From above we can see how the just three variable have real impact(x1,x4,x9) and the rest like a straight line, like the model without the hand data.
 ```{r}
-df=read.csv("Data",header=T)
-str(df)
-df = df[40:60,]
+max_value <- max(data2$y, na.rm = TRUE)
+max_value
 ```
-
-Now let's evaluate mean and variability for each combination
+###  We get the biggest for y is  3.356876 , now let see the value for each varaible.
 ```{r}
-summary(aov(data=df, y~x1+x2+x3+x4+x5+x6+x7+x8+x9+x10+x11))
-```
-All right, it is quite clear that only x1, x4, x7, and x9 have a real influence. This should help!
-
-## Guessing a model
-### DoE
-
-Space filling designs are generally good for guessing a model. I only have 4 real dimensions, so maybe 40 experiments will be enough. Let's start with a purely uniform design and replace our four columns by a better design.
-
-```{r}
-library(DiceDesign)
-set.seed(34234)
-space_dim = 11
-n_sample = 40
-n_replicates = 1
-x_init = runif(n=space_dim * n_sample *n_replicates, min=0, max=1)
-df_doe3 = as.data.frame(matrix(data=x_init, ncol = space_dim))
-names(df_doe3)=paste0("x",1:11)
-df_doe3_lhs = lhsDesign(n_sample, 4, randomized=TRUE, seed=126982)
-df_doe3_lhs = as.data.frame(df_doe3_lhs$design)
-df_doe3[,c(1,4,7,9)]=df_doe3_lhs[,1:4]
-df_doe3
-write.csv(x = df_doe3,file="df_doe3.csv", row.names = F, quote = F)
-```
-### Analysis
-
-Let's get the corresponding results now (session has changed again...):
-```{r}
-df=read.csv("Data",header=T)
-str(df)
-df = df[30:60,]
+data_subset <- data2[c("x1", "x4","x7","x9", "y")]
+data_sorted_desc2 <- data_subset[order(data_subset$y, decreasing = TRUE), ]
+head(data_sorted_desc2)
 ```
 
-
-We're interested in the last row:
-```{r}
-df %>% select(-Date) -> df
-plot(df[,c(1,4,7,9,12)])
-```
-
-Let's plot this more nicely:
-```{r}
-ggplot(df, aes(y=y, x=x1)) + geom_point() + geom_smooth() + geom_smooth(method = "lm", formula = y ~ poly(x,4), color="red") + theme_bw()
-ggplot(df, aes(y=y, x=x4)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-ggplot(df, aes(y=y, x=x7)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-ggplot(df, aes(y=y, x=x9)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-```
-
-All right, unlike x1, which is strongly non linear, x4, x7, and x9 could be considered as such. x9 a a clear negative slope but it's not so clear for x4 and x7. Let's run a close model (a `poly(x1,4)` is obviously biased, just like a loess, but it will do) for this:
-
-```{r}
-summary(lm(data=df, y~poly(x1,4) + x4 + x7 + x9))
-```
-All right, the effect of x7 is really not so clear but the rest is not so bad. x1 seems to explain most of the variability (the remaining variability around x1 is rather low compared to the one coming from x1) although x4, x7, and x9 appear to contribute to the rest. Since we're looking for the higher value, setting x9 to 0 appears like a good choice. For x4, which is not as strong, setting it to 1 also appears like a good choice, and for x7, it is not so clear. Anyway, sampling in the $[0.6,0.85]$ range for x1, is a safe choice.
-
-## Looking for an optimal configuration
-### DoE
-
-```{r}
-set.seed(234981)
-space_dim = 11
-n_sample = 40
-n_replicates = 1
-x_init = runif(n=space_dim * n_sample *n_replicates, min=0, max=1)
-df_doe4 = as.data.frame(matrix(data=x_init, ncol = space_dim))
-names(df_doe4)=paste0("x",1:11)
-df_doe4$x1 = runif(n = n_sample, min=.6, max=.85)
-df_doe4$x9 = 1 # I made a mistake here! x9 should have been a 0!
-df_doe4$x4 = 1
-write.csv(x = df_doe4,file="df_doe4.csv", row.names = F, quote = F)
-```
-
-### Analysis
-
-Let's get the corresponding results now (session has changed again...):
-```{r}
-df=read.csv("Data",header=T)
-str(df)
-df = df[34:66,]
-df %>% select(-Date) -> df
-```
-
-Let's plot again:
-```{r}
-ggplot(df, aes(y=y, x=x1)) + geom_point() + geom_smooth() + geom_smooth(method = "lm", formula = y ~ poly(x,2), color="red") + theme_bw()
-ggplot(df, aes(y=y, x=x7)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-```
-
-
-All right, now, it is pretty clear that setting x4 to 1 would be a good idea in this neighborhood.
-
-The optimal configuration is thus
-- $x1 \approx 0.72$
-- $x4=1$
-- $x7=1$
-- $x9=1$. oh Wait! 0! And that's why y is not close to 3 anymore!
-All other parameters are of no importance
-
-
-### DoE2
-
-One more time!
-```{r}
-set.seed(2981)
-space_dim = 11
-n_sample = 20
-n_replicates = 1
-x_init = runif(n=space_dim * n_sample *n_replicates, min=0, max=1)
-df_doe5 = as.data.frame(matrix(data=x_init, ncol = space_dim))
-names(df_doe5)=paste0("x",1:11)
-df_doe5$x1 = runif(n = n_sample, min=.68, max=.78)
-df_doe5$x9 = 0 
-df_doe5$x4 = 1
-df_doe5$x7 = 1
-write.csv(x = df_doe5,file="df_doe6.csv", row.names = F, quote = F)
-```
-
-### Analysis
-
-Let's get the corresponding results now (session has changed again...):
-```{r}
-df=read.csv("Data",header=T)
-str(df)
-# df = df[381:400,]
-df = df[30:66,]
-df %>% select(-Date) -> df
-```
-
-Let's plot again:
-```{r}
-ggplot(df, aes(y=y, x=x1)) + geom_point() + geom_smooth() + geom_smooth(method = "lm", formula = y ~ poly(x,2), color="red") + theme_bw()
-```
-
-Anyway, the optimal configuration is thus
-- $x1 \approx 0.73$
-- $x4=1$
-- $x7=1$
-- $x9=9$. 
-All other parameters are of no importance and the optimal value for y is around 3.42.
-
-```{r}
-df=read.csv("Data",header=T)
-df %>% select(-Date) -> df
-```
-
-```{r}
-df[df$y==max(df$y),]
-```
+###  We can see the data biased to 0.7 since it was emprical by me additional to the random data.
 
