@@ -5,7 +5,13 @@ output:
 ---
 # Marah`s notes about Passport for Open Science.
 
-### What I learn it ?
+## Press belwo to see the original:
+
+Passport for Open Science - A Practical Guide for PhD Students
+
+https://www.ouvrirlascience.fr/passport-for-open-science-a-practical-guide-for-phd-students/
+
+### What I learned ?
 
 1- Different types of resources for academic research.
 
@@ -19,6 +25,7 @@ begins and updated throughout your research project.
 5-  Peer review is carried out in two stages which reduces the effect
 of publication bias.
 
+6- The most important things I found it how you make your work reproducible and your rights and the tools to do that.
 ### I found this interesting .
 
 1- A thesis that is more widely disseminated is much better protected against
@@ -27,4 +34,6 @@ plagiarism than a work with more restricted dissemination.
 2- The French National Research Agency (ANR) a The ANR now stipulates 
 that funding will only be allocated if the principles of open
 science are respected including full and immediate access to publications.
+
+### It is short notes I took it about special and new things I found it and I  would like to discover it more.
 

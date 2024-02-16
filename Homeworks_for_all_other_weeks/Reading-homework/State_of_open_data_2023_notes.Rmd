@@ -6,6 +6,7 @@ output:
 
 ## Marah Notes about the State of Open Data 2023
 
+
 1. A survey with approximately 55 questions was conducted, focusing on individuals who had conducted research within the past five years.
 
 2. Key Points:
@@ -30,3 +31,7 @@ output:
 4. Additional Notes:
    a. Page number 13 is not well understood.
    b. The cost of publication needs further explanation.
+   
+## Press belwo to see the original:
+
+https://digitalscience.figshare.com/articles/report/The_State_of_Open_Data_2023/24428194
