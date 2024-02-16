@@ -1,0 +1,15 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+## **ShinyApp Report**
+### 1. At first (From the first to the fifteenth experience), I did not understand what I should do and whether I should enter all the lines or just a line. So I started with random assignments to enter 11 numbers in each line, not to specify. Sometimes I put in large numbers and other times I put in smaller numbers. When the resulting numbers started to give very different results, I noticed that I had to follow a plan to find out. What are the variables that give a basic effect? ​​So I followed a simple plan: turn off(0) and turn on (more than zero smaller than 1) alternately.
+
+### 2. I wasn't paying attention that I could put the number 1 on the lines, so I added it and it gave me a small value in Experiment No. 52, but notice that in Experiment 51 and 53 the same numbers are in the variables, but the result is a little different. Perhaps the lines are related to each other in some way.
+
+### 3. The value of Y with zero value for the rest of the variables is 1.017822.
+
+### 4. The x1 has a big good effect on the y in high value situation more than the rest variables from 59,61 experiments.
+
+### 5. 2024-01-11-02:22:58,0.7,0,0,0.7,0,0.7,0,0.7,0,0.1,0.6,3.35687553808329 this the biggest value until now from the experiment number 39.
