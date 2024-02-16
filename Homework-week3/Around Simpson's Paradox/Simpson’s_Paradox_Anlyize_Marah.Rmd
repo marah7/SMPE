@@ -63,7 +63,7 @@ ggplot(data = table, aes(x = Smoker, y = Mortality_Rate, fill = Smoker)) +
 
 ### Although I observe a higher mortality rate in the non-smoker group compared to the smoker group, it's essential to consider the potential influence of age on these results. I will investigate the distribution of women in each age group for both smokers and non-smokers. This will help us assess if there is any bias in the data due to variations in age, ensuring a more comprehensive understanding of the observed mortality rates.
 
-### Perhaps, some of these women might have started smoking recently also mbe some of them dead in mid ages like 40, and this factor could influence the results. Additionally, there are a few women for whom we lack information , also as I said before we take the moratality rate for all ages,that not accurate because there is bias , some ages have already alot of dead people without smoking habits consideration ,Also the number of people in each age group have different counts.
+### Perhaps, some of these women might have started smoking recently also maybe some of them dead in mid ages like 40, and this factor could influence the results. Additionally, there are a few women for whom we lack information , also as I said before we take the moratality rate for all ages,that not accurate because there is bias , some ages have already alot of dead people without smoking habits consideration ,Also the number of people in each age group have different counts.
 
 # Question 2:
 Go back to question 1 (numbers and mortality rates) and add a new category related to the age group. For example, the following classes will be considered: 18-34 years, 34-54 years, 55-64 years, over 65 years.
@@ -132,7 +132,7 @@ ggplot(mortality_by_age_group, aes(x = Age_Group, y = Mortality_Rate, fill = Smo
 
 ```
 
-### The bar chart compares the mortality Rate for each group , we can see how the smoking ipact the mortality rate in the two  groups , 35-54 and 55-64 , but fro younger people not that much , for older whether they are smokers or not they have a high morailty rate.
+### The bar chart compares the mortality Rate for each group , we can see how the smoking ipact the mortality rate in the two  groups , 35-54 and 55-64 , but for younger people not that much , for older whether they are smokers or not they have a high morailty rate.
 
 # Questions 3:
 In order to avoid a bias induced by arbitrary and non-regular age groupings, it is possible to try to perform a logistic regression. If we introduce a Deathvariable of 1or 0to indicate whether the individual died during the 20-year period, we can study the Death ~ Agemodel to study the probability of death as a function of age according to whether one considers the group of smokers or non-smokers. Do these regressions allow you to conclude or not on the harmfulness of smoking? You will be able to propose a graphical representation of these regressions (without omitting the regions of confidence).
@@ -161,7 +161,7 @@ summary(model_smokers)
 model_nonsmokers <- glm(Death ~ Age, family = binomial, data = nonsmokers_data)
 summary(model_nonsmokers)
 ```
-### we can see how the age has impact on death variable  from the output above.
+### We can see how the age has impact on death variable  from the output above.
 ```{r}
 
 
@@ -170,7 +170,7 @@ ggplot(smokers_data, aes(x = Age, y = Death)) +
   stat_smooth(method = "glm", method.args = list(family = "binomial"), 
               formula = y ~ x,   # Logistic regression formula
               geom = "smooth",   # Add a smoothed line
-              se = FALSE,        # Optionally, set to FALSE to not display the confidence interval
+              se = TRUE,        # Optionally, set to FALSE to not display the confidence interval
               color = "red") +  # Color of the smoothed line
   labs(x = "Age", y = "Probability of Death with smoker people", 
        title = "Logistic Regression of Death by Age") +
@@ -181,7 +181,7 @@ ggplot(nonsmokers_data, aes(x = Age, y = Death)) +
   stat_smooth(method = "glm", method.args = list(family = "binomial"), 
               formula = y ~ x,   # Logistic regression formula
               geom = "smooth",   # Add a smoothed line
-              se = FALSE,        # Optionally, set to FALSE to not display the confidence interval
+              se = TRUE,        # Optionally, set to FALSE to not display the confidence interval
               color = "blue") +  # Color of the smoothed line
   labs(x = "Age", y = "Probability of Death with nonsmoker people", 
        title = "Logistic Regression of Death by Age") +
@@ -206,13 +206,13 @@ p <- ggplot() +
 p <- p + geom_point(data = smokers_data, aes(x = Age, y = Death, color = Group)) +
   stat_smooth(data = smokers_data, aes(x = Age, y = Death, color = Group), 
               method = "glm", method.args = list(family = "binomial"), 
-              formula = y ~ x, geom = "smooth", se = FALSE)
+              formula = y ~ x, geom = "smooth",se = TRUE)
 
 # Add points and a smooth line for non-smokers, mapping 'Group' to color within aes()
 p <- p + geom_point(data = nonsmokers_data, aes(x = Age, y = Death, color = Group)) +
   stat_smooth(data = nonsmokers_data, aes(x = Age, y = Death, color = Group), 
               method = "glm", method.args = list(family = "binomial"), 
-              formula = y ~ x, geom = "smooth", se = FALSE)
+              formula = y ~ x, geom = "smooth",se = TRUE)
 
 # Use scale_color_manual to customize the legend and colors
 p <- p + scale_color_manual(name = "Group", 
@@ -226,4 +226,4 @@ print(p)
 ###  we can see from model above how the age between 35-65 has a higher probabilty compare to nonsmoker people in the same age.
 ###  also we can see in general people with age 65 and more have a higher propabilty to die in smokers and nonsmokers people , we should not forget the number of people with age more than 75 is small when the status is smokers so  we can see a real impact from smoking (maybe because most of them dead in earlier).
 
-### I finished my evaluation of my peers' work and they were good. I put my notes in a MOOC and now I am waiting for others to evaluate my work.
+###  I finished my evaluation of my peers' work and they were good one of them there is mising answers and some of  them I did not understand why they do this. I put my notes in a MOOC and now I am waiting for others to evaluate my work.
