@@ -37,9 +37,12 @@
 
 
 ### Homeworks for all other weeks 
+
+## Tasks
 - ✅ Presentation  Robots
 - ✅ Reading about open Data .
 - ✅ Empirical evaluation of Fitts' law.
 - ✅ QuickSort Analyze.
 - ✅ Doe Shiny App.
 
+## Through this course I learned a lot of things not just for science but also for life.
