@@ -1,9 +1,3 @@
----
-output:
-   pdf_document:
-   html_document: default
-  
----
 # Hello! you can find here all the homework with the solutions that were requested from  Master 2 students in the scientific methodology course.
 ### Homeworks Week 1
 
